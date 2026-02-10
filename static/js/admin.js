@@ -133,20 +133,44 @@ function openEmbedModal() {
 <script>
     (function() {
         const container = document.getElementById('ad-platform-panel');
-        container.innerHTML = '<aside class="ads-sidebar" id="external-ads-list" style="position:fixed;left:0;top:0;z-index:9999;"></aside>';
+        container.innerHTML = '<aside class="ads-sidebar" style="position:fixed;right:20px;bottom:20px;z-index:9999;width:250px;background:rgba(15,23,42,0.9);padding:1rem;border-radius:1.5rem;"><div id="external-ads-list" style="transition:opacity 0.5s ease;"></div></aside>';
         
+        let currentAds = [];
+        let currentIndex = 0;
+
         async function loadAds() {
             try {
                 const res = await fetch('${baseUrl}/api/ads');
-                const ads = await res.json();
-                const list = document.getElementById('external-ads-list');
-                list.innerHTML = ads.map(ad => \`
-                    <div class="ad-card" onclick="window.open('\${ad.redirect_url}', '_blank')">
-                        <img src="\${ad.logo_url}" style="width:100%;border-radius:8px;">
-                        <h3 style="color:white;font-size:14px;margin-top:8px;">\${ad.ad_text}</h3>
-                    </div>
-                \`).join('');
+                currentAds = await res.json();
+                if (currentAds.length > 0) startRotation();
             } catch(e) { console.error('Ads failed', e); }
+        }
+
+        function startRotation() {
+            renderAd();
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % currentAds.length;
+                renderAd();
+            }, 6000);
+        }
+
+        function renderAd() {
+            const ad = currentAds[currentIndex];
+            const list = document.getElementById('external-ads-list');
+            list.style.opacity = '0';
+            setTimeout(() => {
+                list.innerHTML = \`
+                    <div class="ad-card" style="display:flex;align-items:center;gap:12px;cursor:pointer;" onclick="window.open('\${ad.redirect_url}', '_blank')">
+                        <img src="\${ad.logo_url}" style="width:48px;height:48px;border-radius:50%;object-shrink:0;border:2px solid #6366f1;">
+                        <div style="flex-grow:1;overflow:hidden;">
+                            <h3 style="color:#1e293b;font-size:14px;margin:0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">\${ad.ad_text}</h3>
+                            <p style="color:#64748b;font-size:11px;margin:0;">Sponsored • Learn More</p>
+                        </div>
+                    </div>
+                \`;
+                list.style.opacity = '1';
+                fetch('${baseUrl}/api/ads/' + ad._id + '/impression', { method: 'POST' });
+            }, 500);
         }
         loadAds();
     })();

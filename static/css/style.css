@@ -192,29 +192,36 @@ td {
     color: var(--danger);
 }
 
-/* Ad Panel UI (Fixed Side) */
+/* Ad Panel UI (Notification Style - Bottom-Right) */
 .ads-sidebar {
     position: fixed;
-    left: 0;
-    top: 0;
-    width: 300px;
-    height: 100vh;
-    background: rgba(15, 23, 42, 0.95);
-    border-right: 1px solid var(--glass-border);
-    padding: 1.5rem;
-    overflow-y: auto;
+    right: 20px;
+    bottom: 20px;
+    width: 280px;
+    height: 70px;
+    background: white;
+    /* Match many sites, or keep glassmorphism */
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50px;
+    /* Highly rounded like social notifications */
+    padding: 8px;
     z-index: 1000;
-    transition: transform 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
 }
 
 .ad-card {
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    border-radius: 1rem;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
     cursor: pointer;
-    transition: all 0.3s ease;
+    text-decoration: none;
 }
 
 .ad-card:hover {
@@ -224,55 +231,53 @@ td {
 }
 
 .ad-card img {
-    width: 100%;
-    height: 150px;
+    width: 50px;
+    height: 50px;
     object-fit: cover;
-    border-radius: 0.75rem;
-    margin-bottom: 0.75rem;
+    border-radius: 50%;
+    /* Circular image as seen in screenshot */
+    flex-shrink: 0;
+    margin-bottom: 0;
+    border: 2px solid var(--primary);
+}
+
+.ad-card-content {
+    flex-grow: 1;
+    overflow: hidden;
 }
 
 .ad-card h3 {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    margin: 0;
+    color: #1e293b;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .ad-card p {
-    font-size: 0.85rem;
-    color: #94a3b8;
+    font-size: 0.7rem;
+    color: #64748b;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
     .ads-sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        border-right: none;
-        border-bottom: 1px solid var(--glass-border);
-        display: flex;
-        overflow-x: auto;
-        gap: 1rem;
-        padding: 1rem;
-        scroll-snap-type: x mandatory;
-    }
-
-    .ads-sidebar>div:first-child {
-        display: none;
-    }
-
-    .ad-card {
-        min-width: 280px;
-        margin-bottom: 0;
-        scroll-snap-align: start;
-    }
-
-    .main-content {
-        margin-left: 0 !important;
+        right: 10px;
+        bottom: 10px;
+        width: 250px;
+        /* Slightly wider even on small mobile for text */
     }
 }
 
 @media (min-width: 1025px) {
     .main-content {
-        margin-left: 300px;
+        margin-left: 0;
+        /* No longer need margin for side panel */
     }
 }
