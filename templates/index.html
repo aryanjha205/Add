@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform Demo | Centralized Ads</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register("{{ url_for('static', filename='sw.js') }}");
+        }
+    </script>
+</head>
+
+<body>
+    <div class="bg-circles">
+        <div class="circle" style="width: 500px; height: 500px; top: 20%; right: -10%;"></div>
+        <div class="circle" style="width: 400px; height: 400px; bottom: 10%; left: 30%; animation-delay: -3s;"></div>
+    </div>
+
+    <!-- The Advertisement Side Panel -->
+    <aside class="ads-sidebar" id="ads-container">
+        <div style="margin-bottom: 2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem;">
+            <h2 style="font-size: 1.2rem; margin-bottom: 0.5rem;"><i class="fas fa-bullhorn"
+                    style="color: var(--primary);"></i> Recommended</h2>
+            <p style="font-size: 0.75rem; color: #94a3b8;">Sponsored content</p>
+        </div>
+        <div id="ads-list">
+            <!-- Dynamic Ads will be injected here -->
+            <div style="text-align: center; color: #94a3b8; padding: 2rem;">Loading ads...</div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="container">
+            <header style="padding: 4rem 0;">
+                <h1 style="font-size: 4rem;">Welcome to the Platform</h1>
+                <p style="font-size: 1.2rem; color: #94a3b8; max-width: 600px; line-height: 1.6;">
+                    This is a demonstration of our centralized Ads Management Platform. Notice the elegant ad panel on
+                    the left? It fetches real-time data from our Flask API.
+                </p>
+                <div style="margin-top: 3rem;">
+                    <a href="/admin" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.1rem;">
+                        Go to Admin Dashboard <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </header>
+
+            <section class="glass-card" style="margin-top: 4rem;">
+                <h2>Platform Features</h2>
+                <div
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                    <div style="padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 1rem;">
+                        <i class="fas fa-server"
+                            style="color: var(--primary); font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <h3>Centralized API</h3>
+                        <p style="color: #94a3b8; margin-top: 0.5rem;">One backend to rule them all. CORS-enabled for
+                            cross-domain usage.</p>
+                    </div>
+                    <div style="padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 1rem;">
+                        <i class="fas fa-chart-line"
+                            style="color: var(--secondary); font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <h3>Click Tracking</h3>
+                        <p style="color: #94a3b8; margin-top: 0.5rem;">Built-in hooks for impressions and click-through
+                            rate analytics.</p>
+                    </div>
+                    <div style="padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 1rem;">
+                        <i class="fas fa-mobile-alt"
+                            style="color: var(--success); font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <h3>Responsive UI</h3>
+                        <p style="color: #94a3b8; margin-top: 0.5rem;">Adapts beautifully to mobile, tablet, and desktop
+                            screens.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/client.js') }}"></script>
+</body>
+
+</html>
