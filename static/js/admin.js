@@ -133,7 +133,7 @@ function openEmbedModal() {
 <script>
     (function() {
         const container = document.getElementById('ad-platform-panel');
-        container.innerHTML = '<aside class="ads-sidebar" style="position:fixed;right:20px;bottom:20px;z-index:9999;width:250px;background:rgba(15,23,42,0.9);padding:1rem;border-radius:1.5rem;"><div id="external-ads-list" style="transition:opacity 0.5s ease;"></div></aside>';
+        container.innerHTML = '<aside id="ext-ads-sidebar" class="ads-sidebar" style="position:fixed;right:20px;bottom:20px;z-index:9999;width:280px;height:70px;background:rgba(255,255,255,0.95);display:flex;align-items:center;padding:8px;border-radius:50px;box-shadow:0 4px 15px rgba(0,0,0,0.1);border:1px solid rgba(0,0,0,0.1);"><button onclick="document.getElementById(\\'ext-ads-sidebar\\').style.display=\\'none\\'" style="position:absolute;top:2px;right:12px;background:none;border:none;font-size:18px;cursor:pointer;color:#64748b;">&times;</button><div id="external-ads-list" style="width:100%;transition:opacity 0.5s ease;"></div></aside>';
         
         let currentAds = [];
         let currentIndex = 0;
